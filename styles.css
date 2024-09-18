@@ -10,8 +10,8 @@
   --secondary-color: #faf3eb;
   --dark-color: #2b2825;
   --text-color: rgb(101, 101, 101);
-  --section-padding: 100px 120px;
-  --section-padding-two: 100px 120px 0;
+  --section-padding: 100px;
+  --section-padding-two: 100px 0 0;
 }
 ul,
 li {
@@ -19,6 +19,13 @@ li {
 }
 a {
   text-decoration: none;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+body{
+  position: relative;
 }
 button {
   border: 0;
@@ -55,7 +62,7 @@ button:hover {
 .icon::before {
   position: absolute;
   content: "";
-  inset: 10px;
+  inset: 8px;
   border: 1px solid white;
 }
 .section-top {
@@ -69,7 +76,6 @@ button:hover {
 .section-top h3 {
   font-size: 3em;
   font-weight: 700;
-  width: 400px;
   text-align: center;
   color: var(--dark-color);
   margin-bottom: 12px;
@@ -89,15 +95,27 @@ button:hover {
   width: 30%;
   background-color: var(--primary-color);
 }
+.main {
+  width: 1150px;
+}
 
 /* ======================================== NAVBAR ======================================== */
+
+header {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  height: 26vh;
+  position: sticky;
+  top: -15vh;
+  z-index: 200;
+}
 .logo-wrap {
   display: grid;
   height: 100%;
   grid-template-columns: repeat(3, 1fr);
 }
 .logo-wrap .logo {
-  padding: 10px;
+  position: relative;
   background-color: var(--primary-color);
 }
 .logo-wrap .logo a {
@@ -108,12 +126,9 @@ button:hover {
   justify-content: center;
   font-weight: bold;
   font-size: 2.5em;
-}
-.logo-wrap .logo div {
-  display: grid;
-  place-items: center;
-  border: 1px solid white;
+  width: 100%;
   height: 100%;
+  z-index: 4;
 }
 .logo-wrap p:nth-child(1) {
   font-weight: bold;
@@ -130,49 +145,124 @@ button:hover {
   justify-content: center;
   gap: 20px;
 }
-header {
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  height: 26vh;
-  position: sticky;
-  top: -15vh;
-  z-index: 200;
-}
+
 nav {
   background-color: var(--dark-color);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-nav ul {
-  display: flex;
-  gap: 20px;
   font-size: 1.2em;
 }
-nav ul a {
+nav a,
+nav p {
+  display: flex;
+  gap: 5px;
+  height: 100%;
+  align-items: center;
   font-weight: 600;
   color: white;
   transition: all 0.5s;
+  cursor: pointer;
+  padding: 15px;
 }
-nav ul a:hover {
+nav a:hover,
+nav p:hover {
   color: var(--primary-color);
 }
-nav ul a.active {
+nav a.active,
+nav p.active {
   color: var(--primary-color);
+}
+.drop-down-toggle {
+  position: relative;
+  height: 100%;
+}
+.drop-down {
+  background-color: white;
+  padding: 8px 0;
+  position: absolute;
+  width: 150px;
+  display: none;
+  z-index: 500;
+}
+.drop-down.active {
+  display: block;
+}
+.drop-down a {
+  font-size: 15px;
+  padding: 6px 15px;
+  color: var(--dark-color);
+}
+.drop-down a:hover {
+  color: initial;
+  background-color: #e9ecef;
+}
+.mobile-nav {
+  background-color: #2b2825;
+  color: white;
+  display: none;
+  padding: 20px 20px 30px;
+  /* position: fixed; */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+.mobile-top > a {
+  color: white;
+  font-weight: 600;
+  font-size: 2.3em;
+}
+.mobile-nav .mobile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobile-nav .nav-toggle {
+  padding: 5px 15px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.mobile-links {
+  display: none;
+}
+.mobile-links.active {
+  display: block;
+}
+.mobile-nav nav {
+  flex-direction: column;
+  align-items: start;
+  margin-top: 15px;
+}
+.mobile-nav nav > a,
+.mobile-nav p {
+  padding: 10px 0;
+  width: 100%;
+}
+.mobile-nav nav ul {
+  display: grid;
+}
+.mobile-nav .drop-down-toggle {
+  width: 100%;
+}
+.mobile-nav .drop-down {
+  width: 100%;
+  position: static;
 }
 
 /* ======================================== HERO SECTION ======================================== */
 .hero {
-  background: url(images/hero.jpg);
+  background: url(images/hero.jpg) right top;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: var(--section-padding);
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 74vh;
   color: white;
 }
+
 .hero h2 {
   font-size: 2.5em;
   color: var(--primary-color);
@@ -210,6 +300,7 @@ nav ul a.active {
   justify-content: center;
   position: relative;
   z-index: 1;
+  cursor: pointer;
 }
 .video .icon::before {
   position: absolute;
@@ -232,17 +323,20 @@ nav ul a.active {
 
 /* ======================================== ABOUT SECTION ======================================== */
 .about-us {
+  display: flex;
+  justify-content: center;
   padding: var(--section-padding-two);
 }
 .about-grid {
   display: grid;
   grid-template-columns: 0.7fr 1fr;
-  margin-top: 50px;
+  margin-top: 70px;
   gap: 50px;
 }
 .about-grid img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .about-grid h2 {
   color: var(--dark-color);
@@ -274,9 +368,13 @@ nav ul a.active {
 .brief-info {
   background: url(images/bg.jpg);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   height: 250px;
-  padding: 0 120px;
+  align-items: center;
+}
+.brief-info .main {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 .brief-info .info {
@@ -294,13 +392,15 @@ nav ul a.active {
 /* ======================================== MENU SECTION ======================================== */
 
 .menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--section-padding-two);
 }
 .filter {
-  height: 80px;
-  width: 370px;
   color: white;
-  padding: 20px;
+  padding: 23px;
+  width: 380px;
   display: grid;
   align-items: center;
   background-color: var(--dark-color);
@@ -314,11 +414,11 @@ nav ul a.active {
   border: 1px solid white;
 }
 .filter ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .filter ul li {
-  width: 100%;
   cursor: pointer;
   z-index: 1;
   padding: 10px 20px;
@@ -348,8 +448,18 @@ nav ul a.active {
 .cake-grid .grid .left .img {
   background-color: var(--dark-color);
   color: var(--primary-color);
-  height: 100%;
   text-align: center;
+  display: grid;
+  width: 150px;
+}
+.cake-grid .grid .left .img img {
+  height: 100%;
+  width: 100%;
+}
+.cake-grid .grid .left .img h3 {
+  display: grid;
+  place-items: center;
+  padding: 5px;
 }
 .cake-grid .grid .right {
   position: relative;
@@ -360,6 +470,7 @@ nav ul a.active {
 .cake-grid .grid .right h2 {
   font-weight: 400;
   margin-bottom: 10px;
+  font-size: 1.25em;
 }
 .cake-grid .grid .right::before {
   position: absolute;
@@ -370,11 +481,14 @@ nav ul a.active {
 
 /* ======================================== DISCOUNT SECTION ======================================== */
 .discount {
-  padding: var(--section-padding);
+  padding-block: var(--section-padding);
   height: fit-content;
   position: relative;
   background-color: white;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .discount::before {
   position: absolute;
@@ -439,13 +553,16 @@ nav ul a.active {
 
 /* ======================================== CHEFS SECTION ======================================== */
 .chefs {
-  padding: var(--section-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--section-padding);
 }
 .chef-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 .chef-grid img {
   width: 100%;
@@ -513,7 +630,7 @@ nav ul a.active {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 80vh;
+  padding-block: 120px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -530,7 +647,8 @@ nav ul a.active {
   margin-block: 20px;
 }
 .offer .btn {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 .offer .btn button:nth-child(2) {
@@ -542,21 +660,24 @@ nav ul a.active {
 }
 
 .testimonials {
-  padding: var(--section-padding);
+  padding-block: var(--section-padding);
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .testimonials .section-top h3 {
   width: 100%;
 }
 .testimonials-grid {
-  margin-top: 50px;
+  margin-top: 70px;
   display: flex;
   gap: 40px;
   overflow: hidden;
 }
 .grid-item .icon {
   transition: 2s;
-  width: 343px;
+  width: 344px;
   font-weight: normal;
   text-align: left;
   padding: 20px;
@@ -564,7 +685,7 @@ nav ul a.active {
   align-items: center;
   height: 200px;
   background-color: var(--dark-color);
-  /* transform: translateX(calc(-343px + -40px)); */
+  /* transform: translateX(calc(-344px + -40px)); */
   opacity: 0.1;
 }
 .testimonials-grid .grid-item:nth-of-type(2) .icon {
@@ -601,122 +722,328 @@ nav ul a.active {
   background-color: var(--primary-color);
 }
 
-@media only screen and (max-width: 1333px) {
-  :root {
-    --section-padding: 100px 70px;
-    --section-padding-two: 100px 70px 0;
-  }
-  .about-grid p {
-    padding-right: 20px;
+footer {
+  position: relative;
+  background: #242324;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+footer::before {
+  position: absolute;
+  content: "";
+  height: 40px;
+  width: 100%;
+  background-color: white;
+  top: 0;
+}
+footer .main {
+  height: 100%;
+}
+.footer-logo {
+  background-color: #e88f2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  font-weight: unset;
+}
+.footer-logo a {
+  color: white;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  z-index: 6;
+}
+.footer-links {
+  height: 380px;
+  display: grid;
+  grid-template-columns: 350px auto;
+  gap: 35px;
+}
+.socials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  width: 170px;
+}
+.socials a {
+  height: 50px;
+  background-color: #e88f2a;
+}
+.stuffs {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  padding: 20px 10%;
+}
+.stuffs:nth-last-of-type(2) {
+  padding-left: 40px;
+}
+.stuffs h3 {
+  color: #e88f2a;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+}
+.stuffs li {
+  margin-bottom: 10px;
+}
+.stuffs a {
+  color: white;
+}
+.links-wrap {
+  display: flex;
+  align-items: center;
+  z-index: 5;
+  padding-top: 40px;
+}
+.links {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.quick-links a,
+.get-in-touch li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+footer form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  margin-top: 10px;
+  height: 60px;
+}
+footer input {
+  padding: 20px;
+  font-size: 1em;
+}
+footer form button {
+  height: 100%;
+  padding: 0;
+  width: auto;
+}
+footer form button::before {
+  display: none;
+}
+.copy-right {
+  background-color: #111111;
+  width: 100%;
+  text-align: center;
+  display: grid;
+  place-items: center;
+  padding-block: 30px;
+}
+.copy-right .main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.copy-right span{
+  border-bottom: 1px solid white;
+}
+.copy-right p:nth-last-of-type(1) span{
+  color: var(--primary-color);
+
+}
+.back-to-top{
+  position: fixed;
+  bottom: 0;
+  width: 45px;
+  z-index: 99999;
+  right: 30px;
+  height: 70px;
+  display: none;
+  place-items: center;
+  color: white;
+  transition: 0.5s;
+  font-size: 1.2em;
+}
+.back-to-top:hover{
+  color: var(--dark-color);
+}
+
+@media only screen and (max-width: 1230px) {
+  .main {
+    width: 92%;
   }
 }
-@media only screen and (max-width: 1200px) {
-  :root {
-    --section-padding: 100px 30px;
-    --section-padding-two: 100px 30px 0;
+@media only screen and (max-width: 1100px) {
+  .main {
+    width: 85%;
   }
-  .brief-info {
-    padding: 0 30px;
+  .footer-links {
+    grid-template-columns: 270px auto;
+    gap: 18px;
   }
-  .brief-info .info h2 {
+  .footer-logo {
+    padding: 15px;
+  }
+  .footer-logo a {
     font-size: 2em;
   }
-  .about-grid p {
-    padding-right: 20px;
+  .links {
+    gap: 10px;
   }
-  h2 {
-    font-size: 1.2em;
+  .socials {
+    width: 100%;
   }
-  p {
-    font-size: 14px;
+  footer form {
+    grid-template-columns: 50% 50%;
+  }
+  footer input {
+    padding: 5px;
   }
 }
-@media screen and (max-width: 991px) {
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  :root {
-    --section-padding: 100px 50px;
-    --section-padding-two: 100px 50px 0;
-  }
-
-  .hero {
-    background-position: center;
+@media only screen and (max-width: 991px) {
+  .main {
+    width: 700px;
   }
   header {
-    height: 12vh;
-    grid-template-rows: 1fr;
-    top: 0;
     display: none;
   }
-  nav {
-    padding: 20px;
-    justify-content: start;
+  .mobile-nav {
+    display: block;
   }
-  nav ul {
-    gap: 40px;
+  .hero .main {
+    display: flex;
     flex-direction: column;
-  }
-  .logo-wrap {
-    display: none;
-  }
-  .hero {
-    height: 100vh;
     align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   .about-grid {
     grid-template-columns: 1fr;
+    gap: 50px;
   }
   .brief-info {
-    height: 300px;
+    height: 400px;
+  }
+  .brief-info .main {
     display: grid;
-    place-items: center;
     grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
   }
   .cake-grid {
     grid-template-columns: 1fr;
   }
-  .grid-odd {
-    grid-column: auto;
-  }
-  .discount-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .discount-grid,
   .chef-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .offer {
-    height: 55vh;
+  .grid-odd {
+    padding-inline: 30px;
+    grid-column: unset;
   }
-  .offer h3 {
+  .section-top h3 {
     width: 100%;
   }
+  .footer-links {
+    height: fit-content;
+    grid-template-columns: 350px auto;
+  }
+  .links-wrap {
+    padding: 90px 0 50px 0;
+  }
+  .links {
+    grid-template-columns: 1fr;
+  }
+  .socials {
+    width: 170px;
+  }
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 767px) {
+  .main {
+    width: 550px;
+  }
   .discount-grid,
   .chef-grid {
     grid-template-columns: 1fr;
   }
-  .chef-grid .info {
-    height: 130px;
-    line-height: 30px;
+
+  .offer p {
+    width: 90%;
+  }
+  .hero h3 {
+    font-size: 2em;
+  }
+  .footer-links {
+    grid-template-columns: 1fr;
+  }
+  .stuffs {
+    padding: 0 !important;
+  }
+  .links-wrap {
+    padding-top: 20px;
+  }
+  .links {
+    gap: 50px;
+  }
+  .footer-logo {
+    padding: 50px 20px;
+  }
+  footer form {
+    grid-template-columns: 82% 18%;
+  }
+  footer input {
+    padding: 20px;
   }
 }
-@media screen and (max-width: 600px) {
-  .hero h2,
-  .grid-odd h1 {
+@media only screen and (max-width: 575px) {
+  .main {
+    width: 91%;
+  }
+  .brief-info {
+    height: fit-content;
+    padding-block: 50px;
+  }
+  .brief-info .main {
+    grid-template-columns: 1fr;
+  }
+  .brief-info .info h2 {
     font-size: 2em;
+  }
+  .bottom {
+    grid-template-columns: 1fr;
+    gap: 50px;
   }
   .hero h1 {
     font-size: 3.5em;
   }
-  .hero h3 {
-    font-size: 2.2em;
+  .hero h2 {
+    font-size: 2em;
   }
-  .offer h3 {
+  .section-top h3 {
     font-size: 2.5em;
   }
-  .offer p {
-    width: 500px;
+  .video p {
+    display: none;
+  }
+}
+@media only screen and (max-width: 405px) {
+  .mobile-top > a,
+  .hero h2,
+  .hero h3{
+    font-size: 1.8em;
+  }
+  .hero h1{
+    font-size: 3em;
+  }
+  .filter {
+    width: 100%;
+  }
+  .offer .btn {
+    grid-template-columns: 1fr;
+  }
+  footer form {
+    grid-template-columns: 75% 25%;
   }
 }
